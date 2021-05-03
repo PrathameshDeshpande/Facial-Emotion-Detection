@@ -60,11 +60,11 @@ checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_b
 callbacks_list = [checkpoint]
 
 # Fitting the model
-model.fit(vgg_features, Y,validation_split=0.2, verbose=1, epochs=100, batch_size=32,callbacks=callbacks_list)
+model.fit(vgg_features, Y,validation_split=0.2, verbose=1, epochs=1000, batch_size=32,callbacks=callbacks_list)
 
 
 
-test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im3.jpg"
+test_path = "/home/prathamesh/Downloads/leaf.jpg"
 test = img_to_array(load_img(test_path))
 test = resize(test, (224,224), anti_aliasing=True)
 test*= 1.0/255
