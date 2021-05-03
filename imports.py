@@ -17,3 +17,6 @@ import random
 import tensorflow as tf
 from PIL import Image, ImageFile
 from keras.callbacks import ModelCheckpoint
+from keras.applications.inception_v3 import InceptionV3
+from keras.applications.resnet50 import ResNet50
+from keras.layers import Add
