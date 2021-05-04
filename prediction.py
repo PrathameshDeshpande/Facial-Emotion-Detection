@@ -1,5 +1,5 @@
 from  imports import *
-from model import create_model1,create_model2,create_features
+from model import create_model1,create_model2
 
 
 
@@ -11,23 +11,32 @@ if len(physical_devices) > 0:
 
 model1 = create_model1()
 model2 = create_model2()
-model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/weights/weights-improvement-9453.hdf5")
+model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/weights/weights-improvement-248.hdf5")
 
-test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im54.jpg"
-test = img_to_array(load_img(test_path))
-test = resize(test, (224,224), anti_aliasing=True)
-test*= 1.0/255
-lab = rgb2lab(test)
-l = lab[:,:,0]
-L = gray2rgb(l)
-L = L.reshape((1,224,224,3))
+test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im8.jpg"
+test1 = img_to_array(load_img(test_path))
+test1= resize(test1, (224,224), anti_aliasing=True)
+test1*= 1.0/255
+lab = rgb2lab(test1)
+l1 = lab[:,:,0]
+L1 = gray2rgb(l1)
+L1 = L1.reshape((1,224,224,3))
 #print(L.shape)
-vggpred = model1.predict(L)
-inception = model2.predict(L)
-ab = model.predict(vggpred)
+vggpred = model1.predict(L1)
+
+test2 = img_to_array(load_img(test_path))
+test2= resize(test2, (299,299), anti_aliasing=True)
+test2*= 1.0/255
+lab2 = rgb2lab(test2)
+l2 = lab2[:,:,0]
+L2 = gray2rgb(l2)
+L2 = L2.reshape((1,299,299,3))
+inception = model2.predict(L2)
+
+ab = model.predict((vggpred,inception))
 #print(ab.shape)
 ab = ab*128
 cur = np.zeros((224, 224, 3))
-cur[:,:,0] = l
+cur[:,:,0] = l1
 cur[:,:,1:] = ab
 imsave("result.jpg", lab2rgb(cur))

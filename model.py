@@ -16,7 +16,7 @@ def create_model1():
 
 def create_model2():
     inv_model = InceptionV3(weights="imagenet")
-    model2 = Model(inv_model.input, inv_model.layers[-2].output)
+    model2 = Model(inv_model.input, inv_model.layers[-3].output)
     for layer in model2.layers:
       layer.trainable=False
     model2.summary()
@@ -39,9 +39,9 @@ def create_features_inception(X,model):
     ifeatures = []
     for i, sample in enumerate(X):
         sample = gray2rgb(sample)
-        sample = sample.reshape((1, 224, 224, 3))
+        sample = sample.reshape((1, 299, 299, 3))
         prediction = model.predict(sample)
-        prediction = prediction.reshape((7, 7, 512))
+        prediction = prediction.reshape((8, 8, 2048))
         ifeatures.append(prediction)
     ifeatures = np.array(ifeatures)
     print(ifeatures.shape)
