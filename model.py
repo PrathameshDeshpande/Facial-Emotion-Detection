@@ -2,7 +2,7 @@ from imports import *
 
 # Function to create a Trained Model
 def create_model1():
-    vggmodel = keras.applications.vgg16.VGG16()
+    vggmodel = keras.applications.vgg19.VGG19()
     model1 = Sequential()
     num = 0
     for i, layer in enumerate(vggmodel.layers):
@@ -49,4 +49,3 @@ def create_features_inception(X,model):
 
 if __name__ == '__main__':
     model1 = create_model1()
-    model2 = create_model2()
