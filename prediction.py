@@ -1,5 +1,5 @@
 from  imports import *
-from model import create_model1,create_model2
+from model import create_model1,create_model2,create_model3
 import cv2
 
 
@@ -11,9 +11,11 @@ def prediction():
       tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
    model1 = create_model1()
-   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/weights/weights-improvement-64.hdf5")
+   model2 = create_model2()
+   model3 = create_model3()
+   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/weights/weights-improvement-77.hdf5")
 
-   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im100.jpg"
+   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im21.jpg"
    image = cv2.imread(test_path)
    test1 = img_to_array(load_img(test_path))
    test1= resize(test1, (224,224), anti_aliasing=True)
@@ -24,8 +26,19 @@ def prediction():
    L1 = L1.reshape((1,224,224,3))
    #print(L.shape)
    vggpred = model1.predict(L1)
+   resnet = model2.predict(L1)
 
-   ab = model.predict(vggpred)
+   testx = img_to_array(load_img(test_path))
+   testx= resize(testx, (299,299), anti_aliasing=True)
+   testx*= 1.0/255
+   lab2 = rgb2lab(testx)
+   l2 = lab2[:,:,0]
+   L2 = gray2rgb(l2)
+   L2 = L2.reshape((1,299,299,3))
+   #print(L.shape)
+   exception = model3.predict(L2)
+
+   ab = model.predict((vggpred,resnet,exception))
    #print(ab.shape)
    ab = ab*128
    cur = np.zeros((224, 224, 3))
