@@ -86,7 +86,7 @@ decoder_output = UpSampling2D((2, 2))(decoder_output)
 model = Model(inputs=(encoder_input1, encoder_input2, encoder_input3), outputs=decoder_output)
 model.summary()
 # compiling the model
-adam = keras.optimizers.Adam(lr=0.01)
+adam = keras.optimizers.Adam(lr=1e-4)
 model.compile(optimizer=adam, loss='mse', metrics=['accuracy'])
 filepath = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/weights-improvement-{epoch:02d}.hdf5"
 checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=True, mode='max')
@@ -94,4 +94,4 @@ callbacks_list = [checkpoint]
 
 # Fitting the model
 model.fit((vgg_features, resnet_features, exception_feature), Y, validation_split=0.2, verbose=1, epochs=1000,
-          batch_size=32, callbacks=callbacks_list)
+          batch_size=3128, callbacks=callbacks_list)

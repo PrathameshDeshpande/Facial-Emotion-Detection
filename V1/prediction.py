@@ -13,9 +13,9 @@ def prediction():
    model1 = create_model1()
    model2 = create_model2()
    model3 = create_model3()
-   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/weights-improvement-270.hdf5")
+   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/weights-improvement-22.hdf5")
 
-   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im28.jpg"
+   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im22.jpg"
    image = cv2.imread(test_path)
    test1 = img_to_array(load_img(test_path))
    test1= resize(test1, (224,224), anti_aliasing=True)

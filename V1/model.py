@@ -1,4 +1,4 @@
-from imports import *
+from V1.imports import *
 
 # Function to create a Trained Model
 def create_model1():
