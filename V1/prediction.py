@@ -4,7 +4,7 @@ import cv2
 
 
 
-
+#V2 OP
 def prediction():
    physical_devices = tf.config.experimental.list_physical_devices('GPU')
    if len(physical_devices) > 0:
@@ -13,11 +13,13 @@ def prediction():
    model1 = create_model1()
    model2 = create_model2()
    model3 = create_model3()
-   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/weights-improvement-22.hdf5")
+   model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/end_model_V2")
 
-   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im22.jpg"
+   test_path = "/home/prathamesh/Downloads/sunflower.jpg"
    image = cv2.imread(test_path)
    test1 = img_to_array(load_img(test_path))
+   shape = test1.shape
+   print(shape)
    test1= resize(test1, (224,224), anti_aliasing=True)
    test1*= 1.0/255
    lab = rgb2lab(test1)
@@ -44,7 +46,9 @@ def prediction():
    cur = np.zeros((224, 224, 3))
    cur[:,:,0] = l1
    cur[:,:,1:] = ab
-   imsave("result.jpg", lab2rgb(cur))
+   cur = lab2rgb(cur)
+   cur = cv2.resize(cur, (shape[0],shape[1]))
+   imsave("result.jpg", cur)
    cv2.imshow("window",image)
    gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
    cv2.imshow("gray",gray)

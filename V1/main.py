@@ -31,7 +31,7 @@ Y = np.array(Y)
 X_v = X_v.reshape(X_v.shape + (1,))
 print(X_v.shape)
 print(Y.shape)
-
+y = Y.resize((128,224,224, 2))
 x = []
 for img in train_i[0]:
     try:
@@ -58,11 +58,11 @@ exception_feature = create_features_xception(x, model3)
 # Encoder with just input as we already have encoded input
 encoder_input1 = Input(shape=(7, 7, 512,))
 decoder_output1 = Conv2D(256, (3, 3), activation='relu', padding='same')(encoder_input1)
-decoder_output1 = Conv2D(256, (3, 3), activation='relu', padding='same')(decoder_output1)
+
 
 encoder_input2 = Input(shape=(7, 7, 2048,))
 decoder_output2 = Conv2D(256, (3, 3), activation='relu', padding='same')(encoder_input2)
-decoder_output2 = Conv2D(256, (3, 3), activation='relu', padding='same')(decoder_output2)
+
 
 encoder_input3 = Input(shape=(10, 10, 2048,))
 decoder_output3 = Conv2D(256, (2, 2), activation='relu')(encoder_input3)
@@ -72,14 +72,14 @@ decoder_output3 = Conv2D(256, (2, 2), activation='relu')(decoder_output3)
 decoder_output = concatenate([decoder_output1, decoder_output2, decoder_output3])
 
 # Decoder attached to encoder output disguised as input
-decoder_output = Conv2D(256, (3, 3), activation='relu', kernel_regularizer=keras.regularizers.l2(0.01),padding='same')(decoder_output)
-decoder_output = Conv2D(128, (3, 3), activation='relu', kernel_regularizer=keras.regularizers.l2(0.01),padding='same')(decoder_output)
+decoder_output = Conv2D(256, (3, 3), activation='relu',padding='same')(decoder_output)
+decoder_output = Conv2D(128, (3, 3), activation='relu',padding='same')(decoder_output)
 decoder_output = UpSampling2D((2, 2))(decoder_output)
-decoder_output = Conv2D(64, (3, 3), activation='relu', kernel_regularizer=keras.regularizers.l2(0.01),padding='same')(decoder_output)
+decoder_output = Conv2D(64, (3, 3), activation='relu',padding='same')(decoder_output)
 decoder_output = UpSampling2D((2, 2))(decoder_output)
-decoder_output = Conv2D(32, (3, 3), activation='relu', kernel_regularizer=keras.regularizers.l2(0.01),padding='same')(decoder_output)
+decoder_output = Conv2D(32, (3, 3), activation='relu',padding='same')(decoder_output)
 decoder_output = UpSampling2D((2, 2))(decoder_output)
-decoder_output = Conv2D(16, (3, 3), activation='relu', kernel_regularizer=keras.regularizers.l2(0.01),padding='same')(decoder_output)
+decoder_output = Conv2D(16, (3, 3), activation='relu',padding='same')(decoder_output)
 decoder_output = UpSampling2D((2, 2))(decoder_output)
 decoder_output = Conv2D(2, (3, 3), activation='tanh', padding='same')(decoder_output)
 decoder_output = UpSampling2D((2, 2))(decoder_output)
@@ -93,5 +93,6 @@ checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_b
 callbacks_list = [checkpoint]
 
 # Fitting the model
-model.fit((vgg_features, resnet_features, exception_feature), Y, validation_split=0.2, verbose=1, epochs=1000,
-          batch_size=3128, callbacks=callbacks_list)
+model.fit((vgg_features, resnet_features, exception_feature), Y, validation_split=0.1, verbose=1, epochs=1000,
+          batch_size=128, callbacks=callbacks_list)
+model.save("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/end_model_V3")

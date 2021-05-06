@@ -1,7 +1,7 @@
 from V1.imports import *
 from V1.model import create_model1, create_model2, create_model3
 import cv2
-
+#V2 OP
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
@@ -9,7 +9,7 @@ if len(physical_devices) > 0:
 model1 = create_model1()
 
 model = tf.keras.models.load_model(
-    "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V2/weights/weights-improvement-100.hdf5")
+    "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V3/weights/end_model_V1")
 
 test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im22.jpg"
 mage = cv2.imread(test_path)
