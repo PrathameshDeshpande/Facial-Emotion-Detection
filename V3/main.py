@@ -16,11 +16,11 @@ Y = []
 for img in train[0]:
     try:
         # converting rgb color space to lab
-        lab = rgb2lab(img)
+        gray = rgb2gray(img)
         # Appending L (Lightness in X)
-        X.append(lab[:, :, 0])
+        X.append(gray)
         # Appending color in Y
-        Y.append(lab[:, :, 1:] / 128)
+        Y.append(img)
     except:
         print('error')
 X = np.array(X)
