@@ -176,7 +176,7 @@ model.compile(loss='sparse_categorical_crossentropy',
               optimizer=opt, metrics=['accuracy'])
 model.summary()
 h1 = model.fit(train_images, train_labels, batch_size=256, epochs=30, verbose=1, validation_data=(valid_images, valid_labels))
-model.save('base_model+Dropout.h5')
+model.save('base_model+Dropout+normalizationV2.h5')
 
 vis_training([h1])
 
