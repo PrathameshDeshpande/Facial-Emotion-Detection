@@ -154,12 +154,10 @@ model.add(BatchNormalization())
 
 model.add(Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same'))
-model.add(Conv2D(256, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 model.add(Dropout(0.25))
 model.add(BatchNormalization())
 
-model.add(Conv2D(512, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(Conv2D(512, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(Conv2D(512, kernel_size=(3, 3), activation='relu', padding='same'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
@@ -181,12 +179,12 @@ opt = keras.optimizers.Adam(lr=0.001)
 model.compile(loss='sparse_categorical_crossentropy',
               optimizer=opt, metrics=['accuracy'])
 model.summary()
-h1 = model.fit(train_images, train_labels, batch_size=256, epochs=40, verbose=1, validation_data=(valid_images, valid_labels))
-model.save('Dropout+normalizationV2.h5')
+h1 = model.fit(train_images, train_labels, batch_size=256, epochs=30, verbose=1, validation_data=(valid_images, valid_labels))
+model.save('base_model.h5')
 
 vis_training([h1])
 
-#model =load_model('/home/prathamesh/Desktop/Body_Language_Detector/save models/Dropout+normalization/Dropout+normalization.h5')
+#model =load_model('Dropout+normalization.h5')
 test_prob = model.predict(test_images)
 test_pred = np.argmax(test_prob, axis=1)
 test_accuracy = np.mean(test_pred == test_labels)
