@@ -15,7 +15,7 @@ def prediction():
    model3 = create_model3()
    model = tf.keras.models.load_model("/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V1/weights/end_model_V2")
 
-   test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im114.jpg"
+   test_path = "/home/prathamesh/Downloads/sunflower.jpg"
    image = cv2.imread(test_path)
    test1 = img_to_array(load_img(test_path))
    shape = test1.shape

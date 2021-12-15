@@ -11,7 +11,7 @@ model1 = create_model1()
 model = tf.keras.models.load_model(
     "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/V2/weights/weights-improvement-100.hdf5")
 
-test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im114.jpg"
+test_path = "/home/prathamesh/Desktop/ML_Projects/Auto_Colorization/mirflickr25k/mirflickr/im22.jpg"
 mage = cv2.imread(test_path)
 test = img_to_array(load_img(test_path))
 test = resize(test, (224, 224), anti_aliasing=True)
